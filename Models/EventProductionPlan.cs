@@ -6,7 +6,7 @@ namespace McpCodeExplainer.Models
     public class EventProductionPlan
     {
         /// <summary>
-        /// האם נעשה שימוש ב-fallback (לא הייתה תשובה תקינה מ-Gemini).
+        
         /// </summary>
         public bool UsedFallback { get; set; }
 

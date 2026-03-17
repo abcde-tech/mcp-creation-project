@@ -1,50 +1,50 @@
 # McpCodeExplainer
 
-פרויקט ASP.NET Core API לתכנון אירועים באמצעות בינה מלאכותית (Gemini).
+ASP.NET Core API project for event planning using AI (Gemini).
 
-## תיאור
+## Description
 
-ה-API מספק שירות לתכנון אירועים מלא, כולל תוכנית, מזון, ברנדינג ותוכנית זמנים, באמצעות AI.
+The API provides a complete event planning service, including program, food, branding, and scheduling, using AI.
 
-## התקנה
+## Installation
 
-1. התקן .NET 9.0
-2. שכפל את הריפו
-3. הוסף את מפתח ה-API של Gemini ל-appsettings.json
-4. הרץ `dotnet build`
-5. הרץ `dotnet run`
+1. Install .NET 9.0
+2. Clone the repo
+3. Add the Gemini API key to appsettings.json
+4. Run `dotnet build`
+5. Run `dotnet run`
 
-## שימוש
+## Usage
 
-### נקודת קצה ראשית
-- `GET /api/EventPlan/health` - בדיקת תקינות
+### Main endpoint
+- `GET /api/EventPlan/health` - Health check
 
-### יצירת תוכנית אירוע
-- `POST /api/EventPlan/generate` - יצירת תוכנית אירוע
+### Generate event plan
+- `POST /api/EventPlan/generate` - Generate event plan
 
-דוגמה לבקשה:
+Example request:
 
 ```json
 {
-  "eventName": "אירוע סוף שנה",
-  "targetAudience": "מורים",
-  "eventDateTime": "2026-06-15T09:00:00",
-  "location": "אולם",
-  "eventObjective": "הערכה למורים",
-  "durationMinutes": 120,
-  "budget": 5000,
-  "expectedAttendees": 80
+"eventName": "End of year event",
+"targetAudience": "teachers",
+"eventDateTime": "2026-06-15T09:00:00",
+"location": "hall",
+"eventObjective": "Teacher evaluation",
+"durationMinutes": 120,
+"budget": 5000,
+"expectedAttendees": 80
 }
 ```
 
-## תצורה
+## Configuration
 
-הוסף ל-appsettings.json:
+Add to appsettings.json:
 
 ```json
 {
-  "Gemini": {
-    "ApiKey": "YOUR_API_KEY"
-  }
+"Gemini": {
+"ApiKey": "YOUR_API_KEY"
+}
 }
 ```
