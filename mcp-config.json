@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "event-planner": {
+      "command": "dotnet",
+      "args": [
+        "run",
+        "--project",
+        "C:/Users/User/Documents/GitHub/webAPI/McpEventPlanner.csproj"
+      ]
+    }
+  }
+}

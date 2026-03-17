@@ -1,10 +1,15 @@
-namespace McpEventPlanner.Models
+namespace McpCodeExplainer.Models
 {
     /// <summary>
-    /// מודל הפקת האירוע המלא
+   
     /// </summary>
     public class EventProductionPlan
     {
+        /// <summary>
+        /// האם נעשה שימוש ב-fallback (לא הייתה תשובה תקינה מ-Gemini).
+        /// </summary>
+        public bool UsedFallback { get; set; }
+
         /// <summary>
         /// פרטי האירוע המקורי
         /// </summary>

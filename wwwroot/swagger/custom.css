@@ -1,0 +1,28 @@
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.swagger-ui .topbar {
+  background: linear-gradient(90deg, #2c3e50 0%, #4b6cb7 100%);
+}
+
+.swagger-ui .topbar .topbar-wrapper .link {
+  color: #ffffff;
+}
+
+.swagger-ui .opblock {
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+}
+
+.swagger-ui .opblock.opblock-get {
+  border-left: 4px solid #3498db;
+}
+
+.swagger-ui .opblock.opblock-post {
+  border-left: 4px solid #e67e22;
+}
+
+.swagger-ui .request-url {
+  font-weight: 600;
+}

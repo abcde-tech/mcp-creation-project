@@ -26,6 +26,10 @@ launchSettings.json
 *.log
 logs/
 
+# App settings (contains secrets)
+appsettings.json
+appsettings.*.json
+
 # Test Coverage
 coverage/
 *.trx

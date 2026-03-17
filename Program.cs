@@ -1,55 +1,51 @@
-using McpEventPlanner.Services;
-using Microsoft.AspNetCore.RateLimiting;
-using System.Threading.RateLimiting;
+using McpCodeExplainer.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// קרא configuration מ-.env ומ-appsettings
-builder.Configuration
-    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
-    .AddEnvironmentVariables();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-// הוסף את ה-Orchestrator
-builder.Services.AddSingleton<EventPlanningOrchestrator>();
-
-// הוסף Rate Limiting
-builder.Services.AddRateLimiter(options =>
+builder.Services.AddSwaggerGen(c =>
 {
-    options.AddFixedWindowLimiter("GeneratePlan", policy =>
+    c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
     {
-        policy.PermitLimit = 10;
-        policy.Window = TimeSpan.FromMinutes(1);
-        policy.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
-        policy.QueueLimit = 2;
+        Title = "MCP Event Planner API",
+        Version = "v1",
+        Description = "API להפקת תכניות אירועים בעזרת בינה מלאכותית"
     });
+});
 
-    options.AddFixedWindowLimiter("Health", policy =>
-    {
-        policy.PermitLimit = 100;
-        policy.Window = TimeSpan.FromMinutes(1);
-    });
-
-    options.OnRejected = async (context, token) =>
-    {
-        context.HttpContext.Response.StatusCode = StatusCodes.Status429TooManyRequests;
-        await context.HttpContext.Response.WriteAsJsonAsync(new 
-        { 
-            error = "הגעת ללימיט של בקשות. נסה שוב בעוד דקה.",
-            retryAfter = context.HttpContext.Response.Headers["Retry-After"]
-        }, cancellationToken: token);
+builder.Services.AddHttpClient("NetFreeClient").ConfigurePrimaryHttpMessageHandler(() => {
+    return new HttpClientHandler {
+       
+        ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => true
     };
 });
 
+
+builder.Services.AddHttpClient();
+
+
+builder.Services.AddScoped<EventPlanningOrchestrator>();
+
 var app = builder.Build();
 
-app.UseSwagger();
-app.UseSwaggerUI();
+app.UseStaticFiles();
 
-app.UseRateLimiter();
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI(c =>
+    {
+        c.InjectStylesheet("/swagger/custom.css");
+        c.DocumentTitle = "MCP Event Planner";
+        c.RoutePrefix = string.Empty; // serve swagger at root
+    });
+}
+
+app.UseHttpsRedirection(); 
+
+app.UseAuthorization();
 app.MapControllers();
+
 app.Run();
